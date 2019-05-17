@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Spring MVC</title>
+
+    <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">-->
+
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
+</head>
+<body>
+<div class="container">
+    <form action="#" method="POST" th:action="@{/addUser}" th:object="${user}">
+        <table class="table table-bordered">
+            <tr>
+                <td><label path="id">id</label></td>
+                <td><label path="name">Name</label></td>
+                <td><label path="age">Email</label></td>
+                <td><label path="birthday">Birthday date</label></td>
+                <td><label path=""></label></td>
+            </tr>
+            <tr>
+                <td><input type="number" path="id" class="form-control"/></td>
+                <td><input type="text" th:field="*{name}" class="form-control"/></td>
+                <td><input type="text" th:field="*{email}" class="form-control"/></td>
+                <td><input type="text" th:field="*{birthdayDate}" class="form-control"/></td>
+                <td>
+                    <button type="button" class="btn btn-success" style="height:40px;width:200px">Add user</button>
+                </td>
+            </tr>
+
+        </table>
+    </form>
+</div>
+<div class="container">
+    <form action="#" method="POST" th:action="@{/deleteUser}" th:object="${user}">
+        <table class="table table-bordered">
+            <tr>
+                <td><label path="id">id</label></td>
+                <td><label path="name">Name</label></td>
+                <td><label path="age">Email</label></td>
+                <td><label path="birthday">Birthday date</label></td>
+                <td><label path=""></label></td>
+            </tr>
+            <tr>
+                <td><input type="number" path="id" class="form-control"/></td>
+                <td><input type="text" th:field="*{name}" class="form-control"/></td>
+                <td><input type="text" th:field="*{email}" class="form-control"/></td>
+                <td><input type="text" th:field="*{birthdayDate}" class="form-control"/></td>
+                <td>
+                    <button type="button" class="btn btn-danger" style="height:40px;width:200px">Delete user</button>
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
+</div>
+<div class="container">
+    <form method="POST" th:action="@{/showAll}">
+        <button type="submit" class="btn btn-info" style="height:500px;width:100%">Show all</button>
+    </form>
+</div>
+</body>
+</html>
