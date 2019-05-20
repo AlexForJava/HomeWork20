@@ -18,6 +18,7 @@
             <th>Birthday date</th>
             <th>Random integer</th>
             <th>Email</th>
+            <th>Delete</th>
         </tr>
         </thead>
         <tbody>
@@ -27,6 +28,7 @@
             <td><span th:text="${user.birthdayDate}">Birthday date</span></td>
             <td><span th:text="${user.random}">Random integer</span></td>
             <td><span th:text="${user.email}">email</span></td>
+            <td><a class="btn btn-warning" style="height:40px;width:200px" th:href="@{'/delete/' + ${user.id}}">Delete user</a></td>
         </tr>
         </tbody>
     </table>

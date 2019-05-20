@@ -1,18 +1,16 @@
 package com.gmail.config;
 
 import com.gmail.annotations.InjectRandomInt;
-import com.gmail.dto.User;
+import com.gmail.service.User;
 import lombok.extern.log4j.Log4j;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
-import org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -85,10 +83,10 @@ public class JavaConfig {
         return new JpaTransactionManager(entityManagerFactory);
     }
 
-    @Bean
+  /*  @Bean
     public PersistenceExceptionTranslationPostProcessor exceptionTranslation() {
         return new PersistenceExceptionTranslationPostProcessor();
-    }
+    }*/
 
     @Bean
     public Properties properties() {

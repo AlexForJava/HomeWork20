@@ -1,4 +1,4 @@
-package com.gmail.dto;
+package com.gmail.service;
 
 import lombok.Data;
 import lombok.experimental.Accessors;

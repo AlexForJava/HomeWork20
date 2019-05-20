@@ -1,43 +1,45 @@
 package com.gmail.controller;
 
-import com.gmail.dto.User;
-import com.gmail.dto.UserDto;
+import com.gmail.service.User;
+import com.gmail.service.UserService;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
  * Created by Space on 17.05.2019.
  */
 @Controller
+@AllArgsConstructor(onConstructor = @__(@Autowired))
 public class UserController {
-    @Autowired
-    private UserDto userDto;
+    private UserService userService;
 
-    @RequestMapping("/")
+    @GetMapping("/")
     public String index(Model model) {
         model.addAttribute("user", new User());
         return "index";
     }
 
-    @RequestMapping(value = "/addUser", method = RequestMethod.POST)
+    @PostMapping(value = "/addUser")
     public String addUser(@ModelAttribute("user") User user) {
-        userDto.save(user);
-        return "index";
+        userService.save(user);
+        return "redirect:showAll";
     }
 
-    @RequestMapping(value = "/deleteUser", method = RequestMethod.POST)
-    public String deleteUser(@ModelAttribute("user") User user) {
-        userDto.deleteById(user.getId());
-        return "redirect:/index";
+    @GetMapping(value = "/delete/{id}")
+    public String deleteUser(@PathVariable("id") Long id) {
+        userService.deleteById(id);
+        return "redirect:/";
     }
 
-    @RequestMapping(value = "/showAll", method = RequestMethod.POST)
+    @GetMapping(value = "/showAll")
     public ModelAndView showAllUsers() {
-        return new ModelAndView("result", "users", userDto.getAll());
+        return new ModelAndView("result", "users", userService.getAll());
     }
 }

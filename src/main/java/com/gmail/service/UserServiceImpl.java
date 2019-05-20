@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by Space on 09.05.2019.
@@ -19,39 +20,70 @@ import java.util.List;
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
+    private UserEntity userEntity;
 
     @Override
-    public void save(UserEntity userEntity) {
+    public void save(User user) {
+        userEntity.setBirthdayDate(user.getBirthdayDate());
+        userEntity.setEmail(user.getEmail());
+        userEntity.setName(user.getName());
         userRepository.save(userEntity);
     }
 
     @Override
-    public UserEntity getById(Long id) throws UserNotFoundException {
-        return userRepository.findById(id).orElseThrow(UserNotFoundException::new);
+    public User getById(Long id) throws UserNotFoundException {
+        return buildUser(userRepository.findById(id).orElseThrow(UserNotFoundException::new));
     }
 
     @Override
-    public List<UserEntity> getByName(String name) {
-        return userRepository.findUsersByName(name);
+    public List<User> getByName(String name) {
+        return userRepository.findUsersByName(name)
+                .stream()
+                .map(this::buildUser)
+                .collect(Collectors.toList());
     }
 
     @Override
-    public List<UserEntity> getByBirthdayDate(LocalDate birthdayDate) {
-        return userRepository.findUsersByBirthdayDate(birthdayDate);
+    public List<User> getByBirthdayDate(LocalDate birthdayDate) {
+        return userRepository.findUsersByBirthdayDate(birthdayDate)
+                .stream()
+                .map(this::buildUser)
+                .collect(Collectors.toList());
     }
 
     @Override
-    public void deleteUser(UserEntity userEntity) {
-        userRepository.delete(userEntity);
+    public void deleteUser(User user) {
+        userRepository.delete(buildEntity(user));
     }
 
     @Override
-    public List<UserEntity> getAll() {
-        return userRepository.findAll();
+    public List<User> getAll() {
+        return userRepository.findAll()
+                .stream()
+                .map(this::buildUser)
+                .collect(Collectors.toList());
     }
 
     @Override
     public void deleteById(Long id) {
         userRepository.deleteById(id);
+    }
+
+    private User buildUser(UserEntity entity) {
+        return new User()
+                .setId(entity.getId())
+                .setName(entity.getName())
+                .setRandom(entity.getRandom())
+                .setBirthdayDate(entity.getBirthdayDate())
+                .setEmail(entity.getEmail());
+    }
+
+    private UserEntity buildEntity(User user) {
+        UserEntity entity = new UserEntity();
+        entity.setId(user.getId());
+        entity.setName(user.getName());
+        entity.setRandom(user.getRandom());
+        entity.setEmail(user.getEmail());
+        return entity;
     }
 }
