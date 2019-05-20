@@ -83,13 +83,8 @@ public class JavaConfig {
         return new JpaTransactionManager(entityManagerFactory);
     }
 
-  /*  @Bean
-    public PersistenceExceptionTranslationPostProcessor exceptionTranslation() {
-        return new PersistenceExceptionTranslationPostProcessor();
-    }*/
-
     @Bean
-    public Properties properties() {
+    private Properties properties() {
         Properties properties = new Properties();
         properties.setProperty("hibernate.hbm2ddl.auto", environment.getProperty("hibernate.hbm2ddl.auto"));
         properties.setProperty("hibernate.show_sql", environment.getProperty("hibernate.show_sql"));
@@ -103,7 +98,7 @@ public class JavaConfig {
     }
 
     @Bean
-    public BeanPostProcessor beanPostProcessor() {
+    private BeanPostProcessor beanPostProcessor() {
         BeanPostProcessor beanPostProcessor = new BeanPostProcessor() {
             @Override
             public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
